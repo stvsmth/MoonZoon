@@ -13,11 +13,13 @@ pub struct Config {
     pub redirect: Redirect,
     pub cors: Cors,
     pub watch: Watch,
+    #[serde(skip)]
+    pub custom: Option<toml::Value>,
 }
 
 impl Config {
     #[throws]
-    pub async fn load_from_moonzoon_toml() -> Config {
+    pub async fn load_from_moonzoon_tomls() -> Config {
         let toml = fs::read_to_string("MoonZoon.toml")
             .await
             .context("Failed to read MoonZoon.toml")?;
